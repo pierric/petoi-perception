@@ -8,13 +8,23 @@
 #include "i2s.h"
 #include "ble.h"
 
-const char *WifiSSID = "<ssid>";
-const char *WifiPWD = "<password>";
+#ifndef WIFISSID
+#error "WIFISSID (wifi ssid) must be defined."
+#define WIFISSID "<ssid>"
+#endif
 
-const char *MQTTBrokerURI = "<broker>";
+#ifndef WIFIPWD
+#error "WIFIPWD (wifi password) must be defined."
+#define WIFIPWD "<password>"
+#endif
+
+#ifndef MQTT_BROKER_IP
+#error "MQTT_BROKER_IP must be defined."
+#define MQTT_BROKER_IP "<broker>"
+#endif
 
 PetoiBLE petoi;
-MqttPetoiClient mqtt(MQTTBrokerURI);
+MqttPetoiClient mqtt(MQTT_BROKER_IP);
 
 void onMessage(void *message, size_t size)
 {
@@ -38,7 +48,7 @@ void setup()
     Serial.println(F("Connecting Wifi"));
     WiFi.mode(WIFI_STA);
     WiFi.setSleep(WIFI_PS_MIN_MODEM);
-    WiFi.begin(WifiSSID, WifiPWD);
+    WiFi.begin(WIFISSID, WIFIPWD);
 
     while (WiFi.status() != WL_CONNECTED)
     {

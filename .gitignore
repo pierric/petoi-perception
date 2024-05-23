@@ -32,3 +32,8 @@
 *.app
 
 *.backup
+
+.pio
+.vscode
+
+export.sh
